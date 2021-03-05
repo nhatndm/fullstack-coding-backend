@@ -1,4 +1,5 @@
-import { Entity, Column, AfterInsert } from 'typeorm';
+import { Entity, Column } from 'typeorm';
+import { ApiProperty } from '@nestjs/swagger';
 
 // DOMAIN
 import { DOMAIN } from '@/constant';
@@ -6,21 +7,21 @@ import { DOMAIN } from '@/constant';
 // BASE CLASS
 import { BaseEntity } from '@/base/base.entity';
 
-// FIREBASE
-import * as admin from 'firebase-admin';
-
 @Entity({ name: DOMAIN.BLOG })
 export class BlogEntity extends BaseEntity {
+  @ApiProperty()
   @Column({
     nullable: false,
   })
   title: string;
 
+  @ApiProperty()
   @Column({
     nullable: false,
   })
   img_url: string;
 
+  @ApiProperty()
   @Column({
     nullable: false,
     type: 'text',

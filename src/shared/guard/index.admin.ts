@@ -17,7 +17,9 @@ export class AuthAdminTokenGuard implements CanActivate {
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const request = context.switchToHttp().getRequest();
     const { headers } = request;
-    const token = headers['authorization'];
+    const bearToken = headers['authorization'];
+
+    const token = bearToken.split(' ')[1];
 
     try {
       const decode = await admin.auth().verifyIdToken(token);

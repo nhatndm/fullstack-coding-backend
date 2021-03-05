@@ -10,6 +10,13 @@ import {
   Put,
   Param,
 } from '@nestjs/common';
+import {
+  ApiCreatedResponse,
+  ApiTags,
+  ApiUnauthorizedResponse,
+  ApiBadRequestResponse,
+  ApiBearerAuth,
+} from '@nestjs/swagger';
 
 // DTO
 import { CreateBlogDto, UpdateBlogDto } from './dto';
@@ -27,6 +34,8 @@ import { API_ROUTE, ERROR_MESSAGE_CODE } from '@/constant';
 import { AuthAdminTokenGuard } from '@/shared/guard/index.admin';
 import { SchemaValidationPipes } from '@/shared/SchemaValidation';
 
+@ApiBearerAuth()
+@ApiTags(API_ROUTE.BLOG.toUpperCase())
 @Controller(API_ROUTE.BLOG)
 export class BlogController {
   constructor(private readonly blogService: BlogService) {}
@@ -34,6 +43,10 @@ export class BlogController {
   @Post('/')
   @UseGuards(AuthAdminTokenGuard)
   @UsePipes(new SchemaValidationPipes())
+  @ApiCreatedResponse({ description: 'New Blog', type: BlogEntity })
+  @ApiUnauthorizedResponse({
+    description: 'You are not allowed to access this request',
+  })
   async createBlog(@Body() createBlogDTO: CreateBlogDto): Promise<BlogEntity> {
     const newBlogIns = new BlogEntity();
     newBlogIns.content = createBlogDTO.content;
@@ -48,6 +61,11 @@ export class BlogController {
   @Put(':id')
   @UseGuards(AuthAdminTokenGuard)
   @UsePipes(new SchemaValidationPipes())
+  @ApiCreatedResponse({ description: 'Updated Blog', type: BlogEntity })
+  @ApiBadRequestResponse({ description: 'This resource is not valid' })
+  @ApiUnauthorizedResponse({
+    description: 'You are not allowed to access this request',
+  })
   async updateChapter(
     @Param('id') id: number,
     @Body() updateBlogDTO: UpdateBlogDto,
@@ -75,6 +93,11 @@ export class BlogController {
 
   @Delete(':id')
   @UseGuards(AuthAdminTokenGuard)
+  @ApiCreatedResponse({ description: 'Status', type: Boolean })
+  @ApiBadRequestResponse({ description: 'This resource is not valid' })
+  @ApiUnauthorizedResponse({
+    description: 'You are not allowed to access this request',
+  })
   async deleteChapter(@Param('id') id: number): Promise<boolean> {
     const blog = await this.blogService.findOneBlog({ id });
 
