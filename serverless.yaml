@@ -3,6 +3,7 @@ service:
 
 plugins:
   - '@hewmen/serverless-plugin-typescript'
+  - serverless-tscpaths
   - serverless-plugin-optimize
   - serverless-offline
   - serverless-plugin-warmup
@@ -27,4 +28,3 @@ functions:
           cors: true
           path: '/'
           method: any
-          

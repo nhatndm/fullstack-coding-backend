@@ -6,13 +6,13 @@ const synchronize = process.env.DB_SYNCHRONIZE === 'true';
 @Module({
   imports: [
     TypeOrmModule.forRoot({
-      type: "postgres",
+      type: 'postgres',
       host: process.env.DB_HOST,
       port: Number(process.env.DB_PORT),
       username: process.env.DB_USERNAME,
       password: process.env.DB_PASSWORD,
       database: process.env.DB_NAME,
-      entities: ['dist/**/*.entity{.ts,.js}'],
+      entities: ['{dist,.build}/**/*.entity{.ts,.js}'],
       synchronize,
       logging: true,
       logger: 'advanced-console',
