@@ -1,0 +1,28 @@
+service:
+  name: fullstack-blog
+
+plugins:
+  - '@hewmen/serverless-plugin-typescript'
+  - serverless-plugin-optimize
+  - serverless-offline
+  - serverless-plugin-warmup
+
+custom:
+  # Enable warmup on all functions (only for production and staging)
+  warmup:
+    enabled: true
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+
+functions:
+  index: # The name of the lambda function
+    # The module 'handler' is exported in the file 'src/lambda'
+    handler: src/lambda.handler
+    events:
+      - http:
+          cors: true
+          path: '/'
+          method: any
+          
