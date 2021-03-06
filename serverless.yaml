@@ -21,6 +21,7 @@ functions:
     handler: src/lambda.handler
     events:
       - http:
+          cors: true
           path: /{any+}
           method: any
 

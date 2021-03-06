@@ -34,6 +34,8 @@ import { API_ROUTE, ERROR_MESSAGE_CODE } from '../constant';
 import { AuthAdminTokenGuard } from '../shared/guard/index.admin';
 import { SchemaValidationPipes } from '../shared/SchemaValidation';
 
+import * as firbaseAdmin from 'firebase-admin';
+
 @ApiBearerAuth()
 @ApiTags(API_ROUTE.BLOG.toUpperCase())
 @Controller(API_ROUTE.BLOG)
@@ -54,6 +56,17 @@ export class BlogController {
     newBlogIns.img_url = createBlogDTO.img_url;
 
     const blog = await this.blogService.save(newBlogIns);
+
+    firbaseAdmin
+      .firestore()
+      .collection('blog')
+      .doc()
+      .set({
+        title: blog.title,
+        img_url: blog.img_url,
+        content: blog.content,
+        pid: blog.id,
+      });
 
     return blog;
   }
@@ -88,6 +101,21 @@ export class BlogController {
 
     const updatedData = await this.blogService.save(blog);
 
+    const blogs = await firbaseAdmin
+      .firestore()
+      .collection('blog')
+      .where('pid', '==', Number(updatedData.id))
+      .get();
+
+    const currentIns = blogs.docs[0];
+
+    await currentIns.ref.update({
+      title: updatedData.title,
+      img_url: updatedData.img_url,
+      content: updatedData.content,
+      pid: updatedData.id,
+    });
+
     return updatedData;
   }
 
@@ -112,6 +140,16 @@ export class BlogController {
     }
 
     await this.blogService.deleteNote(blog);
+
+    const blogs = await firbaseAdmin
+      .firestore()
+      .collection('blog')
+      .where('pid', '==', Number(id))
+      .get();
+
+    const currentIns = blogs.docs[0];
+
+    await currentIns.ref.delete();
 
     return true;
   }
