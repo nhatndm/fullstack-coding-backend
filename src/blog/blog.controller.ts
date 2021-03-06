@@ -28,11 +28,11 @@ import { BlogService } from './blog.service';
 import { BlogEntity } from './blog.entity';
 
 // CONSTANT
-import { API_ROUTE, ERROR_MESSAGE_CODE } from '@/constant';
+import { API_ROUTE, ERROR_MESSAGE_CODE } from '../constant';
 
 // HELPERS
-import { AuthAdminTokenGuard } from '@/shared/guard/index.admin';
-import { SchemaValidationPipes } from '@/shared/SchemaValidation';
+import { AuthAdminTokenGuard } from '../shared/guard/index.admin';
+import { SchemaValidationPipes } from '../shared/SchemaValidation';
 
 @ApiBearerAuth()
 @ApiTags(API_ROUTE.BLOG.toUpperCase())

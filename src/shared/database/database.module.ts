@@ -3,6 +3,9 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 
 const synchronize = process.env.DB_SYNCHRONIZE === 'true';
 
+// ENTITY
+import { BlogEntity } from '../../blog/blog.entity';
+
 @Module({
   imports: [
     TypeOrmModule.forRoot({
@@ -12,7 +15,7 @@ const synchronize = process.env.DB_SYNCHRONIZE === 'true';
       username: process.env.DB_USERNAME,
       password: process.env.DB_PASSWORD,
       database: process.env.DB_NAME,
-      entities: ['{dist,.build}/**/*.entity{.ts,.js}'],
+      entities: [BlogEntity],
       synchronize,
       logging: true,
       logger: 'advanced-console',

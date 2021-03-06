@@ -5,7 +5,7 @@ import { SharedModule } from './shared/shared.module';
 
 // FIREBASE
 import * as admin from 'firebase-admin';
-import { FirebaseConfig } from '@/config/firebase';
+import { FirebaseConfig } from './config/firebase';
 
 // MODULE
 import { BlogModule } from './blog/blog.module';

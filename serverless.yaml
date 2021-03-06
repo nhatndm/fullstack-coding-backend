@@ -2,16 +2,9 @@ service:
   name: fullstack-blog
 
 plugins:
-  - '@hewmen/serverless-plugin-typescript'
-  - serverless-tscpaths
-  - serverless-plugin-optimize
+  - serverless-plugin-typescript
   - serverless-offline
   - serverless-plugin-warmup
-
-custom:
-  # Enable warmup on all functions (only for production and staging)
-  warmup:
-    enabled: true
 
 provider:
   name: aws
@@ -19,12 +12,20 @@ provider:
   stage: prod
   region: ap-southeast-1
 
+package:
+  individually: true
+
 functions:
   index: # The name of the lambda function
     # The module 'handler' is exported in the file 'src/lambda'
     handler: src/lambda.handler
     events:
       - http:
-          cors: true
-          path: '/'
+          path: /{any+}
           method: any
+
+custom:
+  warmup:
+    enabled: true
+  optimize:
+    external: ['swagger-ui-dist']

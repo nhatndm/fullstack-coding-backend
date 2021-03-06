@@ -9,7 +9,7 @@ import {
 
 import { validate } from 'class-validator';
 import { plainToClass } from 'class-transformer';
-import { ERROR_MESSAGE_CODE } from '@/constant/';
+import { ERROR_MESSAGE_CODE } from '../../constant';
 
 @Injectable()
 export class SchemaValidationPipes implements PipeTransform {

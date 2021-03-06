@@ -3,6 +3,7 @@
 /node_modules
 .build
 .serverless
+.webpack
 
 # Logs
 logs

@@ -14,6 +14,8 @@ const bootstrapServer = async (): Promise<Server> => {
 
   const expressApp = mainApp.expressApp;
 
+  mainApp.configSwagger(true);
+
   app.enableCors();
 
   await app.init();
@@ -22,6 +24,14 @@ const bootstrapServer = async (): Promise<Server> => {
 };
 
 export const handler: APIGatewayProxyHandler = async (event, context) => {
+  if (event.path === '/api') {
+    event.path = '/api/';
+  }
+
+  event.path = event.path.includes('swagger-ui')
+    ? `/api${event.path}`
+    : event.path;
+
   if (!cachedServer) {
     cachedServer = await bootstrapServer();
   }

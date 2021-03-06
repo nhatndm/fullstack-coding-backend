@@ -7,7 +7,7 @@ import {
 } from '@nestjs/common';
 
 // CONSTANT
-import { ERROR_MESSAGE_CODE } from '@/constant';
+import { ERROR_MESSAGE_CODE } from '../../constant';
 
 // FIREBASE
 import * as admin from 'firebase-admin';
@@ -18,8 +18,21 @@ export class AuthAdminTokenGuard implements CanActivate {
     const request = context.switchToHttp().getRequest();
     const { headers } = request;
     const bearToken = headers['authorization'];
+    let token = '';
 
-    const token = bearToken.split(' ')[1];
+    if (bearToken) {
+      token = bearToken.split(' ')[1];
+    }
+
+    if (!token) {
+      throw new HttpException(
+        {
+          code: HttpStatus.UNAUTHORIZED,
+          message: ERROR_MESSAGE_CODE.error_002,
+        },
+        HttpStatus.UNAUTHORIZED,
+      );
+    }
 
     try {
       const decode = await admin.auth().verifyIdToken(token);

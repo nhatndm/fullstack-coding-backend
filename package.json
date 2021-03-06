@@ -38,11 +38,11 @@
     "rimraf": "^3.0.2",
     "rxjs": "^6.5.4",
     "serverless-tscpaths": "0.0.5",
+    "swagger-ui-dist": "^3.44.1",
     "swagger-ui-express": "^4.1.6",
     "typeorm": "^0.2.31"
   },
   "devDependencies": {
-    "@hewmen/serverless-plugin-typescript": "^1.1.17",
     "@nestjs/cli": "^7.0.0",
     "@nestjs/schematics": "^7.0.0",
     "@nestjs/testing": "^7.0.0",
@@ -59,10 +59,10 @@
     "prettier": "^1.19.1",
     "serverless-offline": "^6.8.0",
     "serverless-plugin-optimize": "^4.1.4-rc.1",
+    "serverless-plugin-typescript": "^1.1.9",
     "serverless-plugin-warmup": "^5.2.1",
     "supertest": "^4.0.2",
     "ts-jest": "26.1.0",
-    "ts-loader": "^6.2.1",
     "ts-node": "^8.6.2",
     "tsconfig-paths": "^3.9.0",
     "typescript": "^3.7.4"

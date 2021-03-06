@@ -6,6 +6,8 @@ async function bootstrap() {
 
   const app = await mainApp.app;
 
+  mainApp.configSwagger(false);
+
   app.enableCors();
 
   await app.listen(process.env.PORT);
